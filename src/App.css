@@ -1,38 +1,81 @@
+@import '~leaflet/dist/leaflet.css';
+
 .App {
   text-align: center;
+  display: flex;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.column {
+  flex: 1;
+  margin: 1rem;
+  width: 100%;
+  height: 80vh;
   display: flex;
   flex-direction: column;
+}
+
+.chat {
+  flex: 1;
+  flex-direction: column;
+  margin: 1rem;
+  width: 100%;
+  height: 80vh;
+  display: flex;
+}
+
+.messages {
+  flex: 1;
+  width: 100%;
+  flex-direction: column;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  overflow-y: scroll;
 }
 
-.App-link {
-  color: #61dafb;
+.message-container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start;
+  margin-bottom: 1rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.message-sent {
+  background-color: rgb(0, 255, 0, 0.5);
+  margin: 0;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  max-width: 80%;
+  align-self: flex-end;
+  text-align: left;
+}
+
+.message-received {
+  background-color: rgb(0, 0, 255, 0.5);
+  margin: 0;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  max-width: 80%;
+  text-align: left;
+}
+
+.message-container .date-information {
+  text-align: right;
+  align-self: flex-end;
+}
+
+.date-information-sent {
+  text-align: left;
+  align-self: flex-end;
+  margin:0;
+}
+
+.date-information-received {
+  text-align: left;
+  align-self: flex-start;
+  margin:0;
+}
+
+.date-information{
+  margin: 0;
 }
