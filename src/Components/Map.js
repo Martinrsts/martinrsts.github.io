@@ -43,9 +43,12 @@ export default function Map() {
       ))}
       {(departureAirports || []).map((airport, index) => (
         <Marker key={index} position={[airport.location.lat, airport.location.long]} icon={airportIconDeparture}>
-          <Popup>
-            {airport.name}
-          </Popup>
+        <Popup>
+          <p>{airport.id}</p>
+          <p>{airport.name}</p>
+          <p>{airport.city.name}</p>
+          <p>{airport.city.country.name}</p>
+        </Popup>
         </Marker>
       ))}
       {(flights || []).map((flight, index) => (
