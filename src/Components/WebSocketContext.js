@@ -10,6 +10,9 @@ export function WebSocketProvider({ children }) {
   const [flights, setFlights] = useState([]);
   const [arrivalAirports, setArrivalAirports] = useState([]);
   const [departureAirports, setDepartureAirports] = useState([]);
+  const [planes, setPlanes] = useState({});
+  const [flightsId, setFlightsId] = useState([])
+  const [initialPositions, setInitialPositions] = useState({})
   const isSocketInitialized = useRef(false); // To ensure the socket is only initialized once
 
   useEffect(() => {
@@ -43,6 +46,31 @@ export function WebSocketProvider({ children }) {
           setArrivalAirports(Array.from(tempArrivalAirports));
           setDepartureAirports(Array.from(tempDepartureAirports));
           setFlights(Array.from(tempFlights));
+        }
+        if (data_type == 'plane') {
+          const flightId = data.plane.flight_id;
+
+          // Update flightsId and initialPositions if necessary
+          setFlightsId(prevFlightsId => {
+            if (!prevFlightsId.includes(flightId)) {
+              setInitialPositions(prevInitialPositions => {
+                if (!(flightId in prevInitialPositions)) {
+                  return {
+                    ...prevInitialPositions,
+                    [flightId]: data.plane.position
+                  };
+                }
+                return prevInitialPositions;
+              });
+              return [...prevFlightsId, flightId];
+            }
+            return prevFlightsId;
+          });
+
+          setPlanes(prevPlanes => ({
+            ...prevPlanes,
+            [flightId]: data.plane
+          }));
         }
       };
 
@@ -88,7 +116,16 @@ export function WebSocketProvider({ children }) {
   
 
   return (
-    <WebSocketContext.Provider value={{messages, sendMessage, arrivalAirports, departureAirports, flights}}>
+    <WebSocketContext.Provider value={{
+      messages,
+      sendMessage,
+      arrivalAirports,
+      departureAirports,
+      flights,
+      planes,
+      flightsId,
+      initialPositions
+    }}>
       {children}
     </WebSocketContext.Provider>
   );
