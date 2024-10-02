@@ -5,12 +5,16 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import airportIconDepartureImage from '../assets/airportIconDeparture.png';
 import airportIconArrivalImage from '../assets/airportIconArrival.png';
-import airplaneIconImage from '../assets/airplaneIcon.png'
+import airplaneIconImage from '../assets/airplaneIcon.png';
+import landingIconImage from '../assets/landingIcon.png';
+import crashIconImage from '../assets/crashIcon.png';
+import takeoffIconImage from '../assets/takeoffIcon.png';
 import { useWebSocketData } from './WebSocketContext';
 
 export default function Map() {
+
   const position = [-33.45694, -70.64827]; 
-  const { arrivalAirports, departureAirports, flights, planes, flightsId, initialPositions } = useWebSocketData();
+  const { arrivalAirports, departureAirports, flights, planes, flightsId, initialPositions, crashes, takeoffs, landings } = useWebSocketData();
 
   const airportIconDeparture = new L.Icon({
     iconUrl: airportIconDepartureImage,
@@ -33,10 +37,27 @@ export default function Map() {
     popupAnchor: [0, -12] 
   });
 
-  (flightsId || []).map((flightId, index) => (
-    console.log(initialPositions[flightId])
-  ))
-  
+  const landingIcon = new L.Icon({
+    iconUrl: landingIconImage,
+    iconSize: [50, 25], 
+    iconAnchor: [25, 12], 
+    popupAnchor: [0, -12]
+  });
+
+  const takeoffIcon = new L.Icon({
+    iconUrl: takeoffIconImage,
+    iconSize: [50, 25], 
+    iconAnchor: [25, 12], 
+    popupAnchor: [0, -12]
+  });
+
+  const crashIcon = new L.Icon({
+    iconUrl: crashIconImage,
+    iconSize: [50, 25], 
+    iconAnchor: [25, 12], 
+    popupAnchor: [0, -12]
+  });
+
 
   return (
     <MapContainer center={position} zoom={2} style={{ height: '100%', width: '100%' }}>
@@ -73,17 +94,45 @@ export default function Map() {
             <p>vuelo: {flightId}</p>
             <p>aerolinea: {planes[flightId].airline.name}</p>
             <p>capitán: {planes[flightId].captain}</p>
-            <p>ETA: {planes[flightId].ETA}</p>
-            <p>distancia: {planes[flightId].distance}</p>
+            <p>ETA: {planes[flightId].ETA.toFixed(2)}</p>
+            <p>distancia: {planes[flightId].distance.toFixed(2)}</p>
             <p>estado: {planes[flightId].status}</p>
           </Popup>
         </Marker>
-      ))
-    }
+      ))}
       {(flightsId || []).map((flightId, index) => (
         <Polyline key={index} positions={[[initialPositions[flightId].lat, initialPositions[flightId].long],[planes[flightId].position.lat, planes[flightId].position.long]]} color="green"/>
-      ))
-      }
+      ))}
+      {((crashes || [])).map((crash, index) => (
+        <Marker key={index} position={[crash.position.lat, crash.position.long]} icon={crashIcon}>
+          <Popup>
+            <p>vuelo: {crash.flight_id}</p>
+            <p>aerolinea: {crash.airline.name}</p>
+            <p>capitán: {crash.captain}</p>
+            <p>distancia de destino: {crash.distance.toFixed(2)}</p>
+          </Popup>
+        </Marker>
+      ))}
+      {((takeoffs || [])).map((takeoff, index) => (
+        <Marker key={index} position={[takeoff.position.lat, takeoff.position.long]} icon={takeoffIcon}>
+          <Popup>
+            <p>vuelo: {takeoff.flight_id}</p>
+            <p>aerolinea: {takeoff.airline.name}</p>
+            <p>capitán: {takeoff.captain}</p>
+            <p>ETA: {takeoff.ETA.toFixed(2)}</p>
+          </Popup>
+        </Marker>
+      ))}
+      {((landings || [])).map((landing, index) => (
+        <Marker key={index} position={[landing.position.lat, landing.position.long]} icon={landingIcon}>
+          <Popup>
+            <p>vuelo: {landing.flight_id}</p>
+            <p>aerolinea: {landing.airline.name}</p>
+            <p>capitán: {landing.captain}</p>
+          </Popup>
+        </Marker>
+      ))}
+      
     </MapContainer>
   );
 };

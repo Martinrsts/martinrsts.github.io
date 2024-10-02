@@ -5,7 +5,7 @@ import { useWebSocketData } from './WebSocketContext';
 
 export default function Chat() {
 
-    const { messages, sendMessage } = useWebSocketData();
+    const { messages, sendMessage, alert } = useWebSocketData();
     const [inputValue, setInputValue] = useState('');
 
     const handleInputChange = (e) => {
@@ -21,6 +21,7 @@ export default function Chat() {
 
     return (
         <div className='chat'>
+            {alert ? <div className='alert'>{alert}</div> : 
             <div className='messages'>
                 {(messages || []).map((message, index) => {
                     if (message.message.name === 'MartinRSTS') {
@@ -30,6 +31,7 @@ export default function Chat() {
                     }
                 })}
             </div>
+            }
             <input type="text" value={inputValue} onChange={handleInputChange} />
             <button onClick={handleSendMessage}>Send</button>
         </div>
