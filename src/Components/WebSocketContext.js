@@ -116,7 +116,7 @@ export function WebSocketProvider({ children }) {
             const updatedTakeoffs = [...prevTakeoffs];
             return updatedTakeoffs.filter(takeoff => takeoff.flight_id !== new_data.flight_id)
           });
-        }, 10000);
+        }, 60000);
       }
 
       const handleCrash = (new_data) => {
@@ -133,7 +133,7 @@ export function WebSocketProvider({ children }) {
             const updatedCrashes = [...prevCrashes];
             return updatedCrashes.filter(crashed => crashed.flight_id !== new_data.flight_id)
           });
-        }, 10000);
+        }, 60000);
       }
 
       const handleLandings = (new_data) => {
@@ -150,7 +150,7 @@ export function WebSocketProvider({ children }) {
             const updatedLandings = [...prevLandings];
             return updatedLandings.filter(landing => landing.flight_id !== new_data.flight_id)
           });
-        }, 10000);
+        }, 60000);
       }
 
 
