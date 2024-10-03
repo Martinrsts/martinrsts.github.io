@@ -8,11 +8,15 @@ function App() {
   return (
     <WebSocketProvider>
       <div className="App">
-        <div className='column'>
-          <Map />
-          <Table />
-        </div>
-        <Chat /> 
+        <div className="upperPart">
+          <div className='column'>
+              <Map />
+            </div>
+          <div className='column'>
+            <Chat /> 
+          </div>
+          </div>
+        <Table />
       </div>  
     </WebSocketProvider>
   );
