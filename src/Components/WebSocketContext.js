@@ -47,8 +47,8 @@ export function WebSocketProvider({ children }) {
       tempFlights.add([[flightsData[flight].departure.location.lat, flightsData[flight].departure.location.long], [flightsData[flight].destination.location.lat, flightsData[flight].destination.location.long]]);
       tempTableData.push(flightsData[flight]);
     });
-
-    tempTableData.sort((a, b) => ((flightsData[a].departure.name > flightsData[b].departure.name) || ((flightsData[a].departure.name === flightsData[b].departure.name) && (flightsData[a].destination.name > flightsData[b].destination.name))) ? 1 : -1);
+  
+    tempTableData.sort((a, b) => ((a.departure.name > b.departure.name) || ((a.departure.name === b.departure.name) && (a.destination.name > b.destination.name))) ? 1 : -1);
     setTableData(() => Array.from(tempTableData));
     setArrivalAirports(() => Array.from(tempArrivalAirports));
     setDepartureAirports(() => Array.from(tempDepartureAirports));
