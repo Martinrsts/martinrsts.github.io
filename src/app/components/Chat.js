@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 const Chat = ({ apiUrl }) => {
   const [messages, setMessages] = useState([{
-      user: "Bot", text: "Hola, soy un chatbot que te ayudará a responder tus preguntas sobre algunas peliculas. Las peliculas que puedo responder son: - Basic Instinct - Catch Me if You Can \n- Dances with Wolves \n- Dead Poets Society \n- Jojo Rabbit \n- Slumdog Millionaire \n- The Godfather \n- The Matrix \n- The Prestige \n- Twelve Monkeys. Puedes hacerme una pregunta sobre alguna de estas peliculas y te responderé lo mejor que pueda."
+      user: "Bot", text: "Hello, I am a chatbot that will help you answer your questions about some movies. The movies I can answer are: - Basic Instinct - Catch Me if You Can \n- Dances with Wolves \n- Dead Poets Society \n- Jojo Rabbit \n- Slumdog Millionaire \n- The Godfather \n- The Matrix \n- The Prestige \n- Twelve Monkeys. You can ask me a question about any of these movies and I will answer as best as I can."
   }]);
   const [currentMessage, setCurrentMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
