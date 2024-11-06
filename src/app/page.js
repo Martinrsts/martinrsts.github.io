@@ -1,7 +1,7 @@
 import Chat from './components/Chat';
 
 export default function Home() {
-  const apiUrl = 'http://34.136.247.4:5000/question'; // Replace with your API endpoint
+  const apiUrl = 'https://tareataller.zapto.org/question'; // Replace with your API endpoint
 
   return (
     <div className="h-screen bg-gray-100 flex items-center justify-center">
